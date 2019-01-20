@@ -30,6 +30,5 @@ after_success:
   - git init
   - git config --global user.name "Noble"
   - git config --global user.email "AaronWang1129@gmail.com"
-  # 替换同目录下的_config.yml文件中GH_TOKEN字符串为travis后台配置的变量
   - sed -i "s/GH_TOKEN/${GH_TOKEN}/g" ./_config.yml
   - hexo deploy

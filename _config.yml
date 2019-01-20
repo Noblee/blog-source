@@ -78,12 +78,12 @@ theme: landscape
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-- type: git
-  repo: https://github.com/Noblee/nobler.xyz.git
+  type: git
+  repo: https://GH_TOKEN@github.com//Noblee/noblee.github.io.git
   branch: master
-- type: sftp
-  host: nobler.xyz
-  user: root
-  remotePath: /var/www/html/
+# - type: sftp
+#   host: nobler.xyz
+#   user: root
+#   remotePath: /var/www/html/
 
 
