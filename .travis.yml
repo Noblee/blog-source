@@ -22,12 +22,13 @@ install:
 
 # 执行脚本，先hexo clean 再 hexo generate，会使用hexo的同学应该不陌生。
 script:
+  - rm -rf ./.deploy_git
   - hexo clean
   - hexo generate
 
 # 上面的脚本执行成功之后执行以下脚本进行deploy
 after_success:
-  - git init
+  - git init 
   - git config --global user.name "Noble"
   - git config --global user.email "AaronWang1129@gmail.com"
   - sed -i "s/GH_TOKEN/${GH_TOKEN}/g" ./_config.yml
