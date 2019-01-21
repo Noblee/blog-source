@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: Noble‘s Blog
 subtitle:
-description:
+description: 给时光以生命，而不是给生命以时光。
 keywords:
-author: John Doe
-language:
-timezone:
+author: Noble
+language: zh-Hans
+timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: https://www.nobler.xyz
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -42,7 +42,7 @@ highlight:
   enable: true
   line_number: true
   auto_detect: false
-  tab_replace:
+  tab_replace: true
   
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
@@ -73,7 +73,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
