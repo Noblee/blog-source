@@ -3,9 +3,9 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Noble‘s Blog
-subtitle:
-description: 给时光以生命，而不是给生命以时光。
+title: Noble's Blog
+subtitle: 给时光以生命，而不是给生命以时光。
+description: 
 keywords:
 author: Noble
 language: zh-Hans

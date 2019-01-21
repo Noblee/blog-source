@@ -61,8 +61,7 @@ originContent: >-
   7. char 数据类型是一 个采用 UTF-16 编码表示 Unicode 码点的代码单元。 大多数的常用 Unicode 字符使用一个代
   码单元就可以表示， 而辅助字符需要一对代码单元表示。
 
-  8.
-  ![image.png](https://i.loli.net/2019/01/21/5c453af4afdf3.png)![](https://www.nobler.xyz/wp-content/uploads/2019/01/5c2b534d8bea5-300x103.png)
+  8. ![image.png](https://i.loli.net/2019/01/21/5c453af4afdf3.png)
 
   9. java的cmake？
 
@@ -96,26 +95,17 @@ originContent: >-
   13. 如果类中提供了至少一个构造器，但是没有提供无参数的构造器， 则在构造对象时如果 没有提供参数就会被视为不合法。
 
   14. 初始值不一定是常量值。
+   ```java
+   class Employee{
+      private static int nextld;
+      private int id = assignldO;
+      private static int assignld{ 
+      int r = nextld; nextld++;
+      return r;
+      }
+  }
 
-  > ```java
-
-  > class Employee{
-
-  >    private static int nextld;
-
-  >    private int id = assignldO;
-
-  >    private static int assignld{ 
-
-  >    int r = nextld; nextld++;
-
-  >    return r;
-
-  >    }
-
-  >}
-
-  > ```
+  ```
 
 
   15. java内存结构
@@ -124,21 +114,14 @@ originContent: >-
 
   16. 对象初始化块（要在实例域后定义）和静态初始化块
 
-  >```java
-
-  >    (static) class Some{
-
-  >        private int a;
-
-  >        {
-
-  >            a++;
-
-  >        }
-
-  >    }
-
-  >```
+  ```java
+      (static) class Some{
+        private int a;
+          {
+              a++;
+          }
+      }
+  ```
 
 
   17. import 语句不仅可以导入类，还增加了导人`静态方法`和`静态域`的功能。
@@ -261,8 +244,6 @@ originContent: >-
   **如果在子类中重新定义equals**,就要在其中包含调用super.equals(other)  
 
 
-  .
-
   29. 对于数组类型的域，可以使用静态的Arrays.equals方法检测相应的数组元素是否相等。
 
   30.hashcodeAPI
@@ -325,9 +306,6 @@ originContent: >-
 
   ```
 
-
-  。
-
   36. 枚举：`public enuni Size { SMALL, MEDIUM, LARGE, EXTRAJARGE };`
 
   实际上，这个声明定义的类型是一个类， 它刚好有4 个实例， 在此尽量不要构造新对象。
@@ -337,7 +315,6 @@ originContent: >-
   可以了。
 
   37. 枚举的复杂用法：
-
 
   ```java
 
@@ -880,7 +857,7 @@ class MyAnimation
 | 字面数值表示 | 可以加下划线 | 不可以 | |
 | 进制表示 | 可表示二进制（0b\|0B） | 不可以 | |
 | 无符号数 | 没有 | 有 | |
-| 逗号运算符 | 没有 | 有 |
-| 更改器方法与访问器方法 | 无明显区别 | const关键字 |
-| 方法参数 | 按值（引用也是按值） | 真引用（换个名字） |
+| 逗号运算符 | 没有 | 有 ||
+| 更改器方法与访问器方法 | 无明显区别 | const关键字 ||
+| 方法参数 | 按值（引用也是按值） | 真引用（换个名字） ||
   [2]: https://www.nobler.xyz/wp-content/uploads/2019/01/WX20190106-145446.png
