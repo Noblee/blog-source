@@ -4,6 +4,7 @@ tags:
   - 语言
   - 基础
   - Java
+  - 笔记
 originContent: >-
   # Java 语言学习笔记
 
@@ -223,7 +224,7 @@ originContent: >-
 
   4 ) 比较this 与otherObject 是否属于同一个类。如果equals 的语义在每个子类中有所改变，就使用getClass 检测：
 
-  `if (getClass() != otherObject.getCIassO) return false;`
+  `if (getClass() != otherObject.getCIass()) return false;`
 
   如果所有的子类都拥有统一的语义，就使用instanceof 检测：
 
@@ -245,6 +246,7 @@ originContent: >-
 
 
   29. 对于数组类型的域，可以使用静态的Arrays.equals方法检测相应的数组元素是否相等。
+
 
   30.hashcodeAPI
 
@@ -330,23 +332,21 @@ originContent: >-
   ```
 
 
-  `Size s = Enum.valueOf(Size,class, "SMALL");`
+  `Size s = Enum.valueOf(Size.class, "SMALL");`
 
   `Size[] Size.values()`
 
   38. 反射
 
-  > `Class cl = Cl ass.forName(dassName) ;`
+  > `Class cl = Cl ass.forName(className) ;`
 
   鉴于历史原getName 方法在应用于数组类型的时候会返回一个很奇怪的名字：
 
-  • Double[ ] class.getName( ) 返回“ [Ljava.lang.Double; ’’
+  • Double[] class.getName() 返回“ [Ljava.lang.Double; ’’
 
-  • int[ ].class.getName( ) 返回“ [I ” ，
+  • int[].class.getName()返回“ [I ” ，
 
-  虚拟机为每个类型管理一个Class 对象。因此， 可以利用=运算符实现两个类对象比较
-
-  的操作
+  虚拟机为每个类型管理一个Class对象。因此， 可以利用=运算符实现两个类对象比较的操作
 
   > Class
   类的getDeclareFields、getDeclareMethods和getDeclaredConstructors方法将分别返回类中声明的全部域、方法和构造器，
@@ -373,7 +373,7 @@ originContent: >-
   public static Object goodCopyOf(Object a, int newLength)
 
   {
-      Class cl = a.getClassO；
+      Class cl = a.getClass()；
       if (！cl.isArray()) return null ;
       Class componentType = cl.getComponentType()；//注意
       int length = Array.getLength(a);
@@ -388,23 +388,19 @@ originContent: >-
 
   `Object invoke(Object obj, Object... args)` 如果是静态方法obj填null
 
-  41. 虽然在接口中不能包含实例域或静态方法，但却可以包含常量
+  41. 虽然在接口中不能包含实例域或**静态方法(java8之前)**，但却可以包含常量.
 
   42. 目前为止， 通常的做法都是将静态方法放在伴随类中。在标准库中， 你会看到成对出现
 
-  的接口和实用工具类， 如Collection/Collections 或Path/Paths。
-
-  面来看Paths 类， 其中只包含两个工厂方法。可以由一个字符串序列构造一个文件或
-
-  目录的路径， 如Paths.getfjdk1.8.0", "jre", "bin")。在Java SE 8 中， 可以为Path 接口增加以
-
-  下方法：
+  的接口和实用工具类， 如Collection/Collections 或Path/Paths。面来看Paths 类，
+  其中只包含两个工厂方法。可以由一个字符串序列构造一个文件或目录的路径， 如Paths.get("jdk1.8.0", "jre", "bin")。在Java
+  SE 8中， 可以为Path 接口增加以下方法：
 
   ```java
 
   public interface Path{
       public static Path get(String first, String... more) {
-      return Fi1eSystems.getDefaul t() .getPath(first, more);
+      return Fi1eSystems.getDefault().getPath(first, more);
       }
   }
 
@@ -414,42 +410,33 @@ originContent: >-
 
   43. default关键字：用于接口中方法的声明，意为接口中的实现为默认实现，如果实现接口的类不覆盖则使用这个实现。
 
-  44. 默认方法的一个重要用法是“ 接口演化” （interface evolution)。
+  44. 默认方法的一个重要用法是“接口演化” （interface evolution)。
 
-  45. 我们只讨论了两个接口的命名冲突。现在来考虑另一种情况， 一个类扩展了一个超类，
+  45.
+  我们只讨论了两个接口的命名冲突。现在来考虑另一种情况，一个类扩展了一个超类，同时实现了一个接口，并从超类和接口继承了相同的方法。例如，假设Person
+  是一个类，Student 定义为：class Student extends Person implements Named { . . .
+  }在这种情况下， 只会考虑超类方法， 接口的所有默认方法都会被忽略。在我们的例子中，
+  Student从Person继承了getName方法，Named接口是否为getName提供了默认实现并不会带来什么区别。这正是“ 类优先” 规则。
 
-  同时实现了一个接口，并从超类和接口继承了相同的方法。例如， 假设Person 是一个类，
+  46. 尽管LengthComparator对象没有状态，不过还是需要建立这个对象的一个实例。我们需要这个实例来调用compare方法，它不是一个静态方法。
 
-  Student 定义为：
-
-  class Student extends Person implements Named { . . . }
-
-  在这种情况下， 只会考虑超类方法， 接口的所有默认方法都会被忽略。在我们的例子
-
-  中， Student 从Person 继承了getName 方法， Named 接口是否为getName 提供了默认实现并
-
-  不会带来什么区别。这正是“ 类优先” 规则。
-
-  46. 尽管LengthComparator 对象没有状态， 不过还是需要建立这个对象的一个实例。
-
-  我们需要这个实例来调用compare 方法它不是一个静态方法。
-
-  47. ![image.png](https://i.loli.net/2019/01/21/5c453bea3e69d.png)
-
+  47.
   通常子对象都是可变的，必须重新定义clone方法来建立一个深拷贝，同时克隆所有子对象。在这个例子中，hireDay域是一个Date,这是可变的，所以它也需要克隆。（出于这个原因，这个例子使用Date类型的域而不是LocalDate来展示克隆过程。如果hireDay是不可变的LocalDate类的一个实例，就无需我们做任何处理了。）
 
-  48. Cloneable 接口是Java 提供的一组标记接口( tagging interface ) 之一
+  ![image.png](https://i.loli.net/2019/01/21/5c453bea3e69d.png)
 
-  标记接口不包含任何方法；它唯一的作用就是允许在类型查询中使用instanceof.即使clone
-  的默认（浅拷贝）实现能够满足要求，还是需要实现Cloneable接口，将clone重新定义为public， 再调用super.clone()。
+  48. Cloneable 接口是Java提供的一组标记接口(tagging interface) 之一
+
+  标记接口不包含任何方法；它唯一的作用就是允许在类型查询中使用instanceof。即使clone的默认（浅拷贝）实现能够满足要求（实例域全部是不可变时），还是需要实现Cloneable接口，将clone重新定义为public，
+  再调用super.clone()。
 
   49. 如果在一个对象上调用clone,但这个对象的类并没有实现Cloneable接口，Object
   类的clone方法就会拋出一个CloneNotSupportedException当然，Employee和Date类实现了Cloneable
   接口，所以不会抛出这个异常。不过，编译器并不了解这一点，因此，我们声明了这个异常。
 
-  50. 所有数组类型都有一个public 的clone 方法，而不是protected:可以用这个方法
+  50. 所有数组类型都有一个public的clone 方法，而不是protected,可以用这个方法
 
-  建立一个新数组， 包含原数组所有元素的副本。
+  建立一个新数组，包含原数组所有元素的副本。
 
   51. 对于只有一个抽象方法的接口， 需要这种接口的对象时，就可以提供一个lambda 表达式。这种接口称为函数式接口（ functional
   interface )。
@@ -495,10 +482,8 @@ originContent: >-
   对于第3 种情况， 第1个参数会成为方法的目标。例如，String::compareToIgnoreCase 等同于(x, y) ->
   x.compareToIgnoreCase(y);
 
-  55. lambda 表达式中捕获的变量必须实际上是**最终变量( effectivelyfinal)**。
-
-  实际上的最终变量是指， 这个变量初始化之后就不会再为它赋新值。在这里，text 总是指示同一个
-  String对象，所以捕获这个变量是合法的。不过，i的值会改变，因此不能捕获i。
+  55. lambda 表达式中捕获的变量必须实际上是**最终变量( effectivelyfinal)**。实际上的最终变量是指，
+  这个变量初始化之后就不会再为它赋新值。在这里，text 总是指示同一个 String对象，所以捕获这个变量是合法的。不过，i的值会改变，因此不能捕获i。
 
   56. 内部类既可以访问自身的数据域，也可以访问创建它的外围类对象的数据域.为了能够运行这个程序，内部类的对象总有一个隐式引用，它指向了创建它的外部类对象。
 
@@ -523,7 +508,7 @@ originContent: >-
 
   63. catch (FileNotFoundException | UnknownHostException e) { . . . }
 
-  64. 同样，也不应该声明从RuntimeException 继承的那些非受查异常0
+  64. 同样，也不应该声明从RuntimeException 继承的那些非受查异常.
 
   ```java 
 
@@ -537,9 +522,7 @@ originContent: >-
 
   ```
 
-  65. 未被任何变量引用的日志记录器可能会被垃圾回收。为了防止这种情况发生，要
-
-  像上面的例子中一样， 用一个静态变量存储日志记录器的一个引用。
+  65. 未被任何变量引用的日志记录器可能会被垃圾回收。为了防止这种情况发生，要像上面的例子中一样，用一个静态变量存储日志记录器的一个引用。
 
 
   ## JAVA和C++的区别
@@ -553,7 +536,7 @@ originContent: >-
 
   | 字面数值表示 | 可以加下划线 | 不可以 | |
 
-  | 进制表示 | 可表示二进制（0b\|0B） | 不可以 | |
+  | 进制表示 | 可表示二进制（0b或0B） | 不可以 | |
 
   | 无符号数 | 没有 | 有 | |
 
@@ -587,7 +570,7 @@ handler 处理器
 >可移植性是Java语言的设计目标之一， 无论在哪个虚拟机上运行，同一运算应该得到同样的结果,对于浮点数的算术运算，实现这样的可移植性是相当困难。double类型使用 64 位存储一个数值，而有些处理器使用80位浮点寄存器,这些寄存器增加了中间过程的计算精度. 但是，这个结果可能与始终在64位机器上计算的结果不一样。因此， Java 虚拟机的最初规范规定所有的中间计算都必须进行截断这种行为遭到了数值计算团体的反对。 截断计算不仅可能导致溢出，而且由于截断操作需要消耗时间，所以在计算速度上实际上要比精确计算慢。 为此，Java承认了最优性能与理想结果之间存在的冲突，并给予了改进。在默认情况下，虚拟机设计者允许对中间计算结果采用扩展的精度。但是，对于使用strictfp关键字标记的方法必须使用严格的浮点计算来生成可再生的结果。
 >* 可以把 main 方法标记为 public static strictfp void main(String[] args)于是，在main方法中的所有指令都将使用严格的浮点计算。
 >* 如果将一个类标记为 strictfp, 这个类中的所有方法都要使用严格的浮点计算。实际的计算方式将取决于 Intel 处理器的行为。
->
+
 > 在默认情况下，中间结果允许使用扩展 的指数， 但不允许使用扩展的尾数(Intel 芯片在截断尾数时并不损失性能)。 因此，这两种 方式的区别仅仅在于采用默认的方式不会产生溢出，而采用严格的计算有可能产生溢出。
 
 5. C++ 注释: 不要在 boolean 类型与任何数值类型之间进行强制类型转换，这样可以防止发生错误。只有极少数的情况才需要将布尔类型转换为数值类型，这时可以使用条件表达式b? 1:0
@@ -667,7 +650,6 @@ c:\classdir;.;c:\archives\ archive.jar
 * 对本包和所有子类可见————protected
 * 对本包可见————默认（很遗憾)，不需要修饰符.
 
-.
 27. 为了防备name或hireDay可能为null的情况，需要使用Objects.equals 方法。
 28. 关于equals方法
 > 1. （默认方法）Object的equals方法检测两个类是否具有相同的引用。(但我们的需求经常是连个类的状态（域）相等即为相等，但这也不绝对，所以对于一个对象怎样算相等应当具体问题具体分析)
@@ -681,7 +663,7 @@ c:\classdir;.;c:\archives\ archive.jar
 3 ) 检测otherObject 是否为null .
 `if (otherObject = null ) return false;`
 4 ) 比较this 与otherObject 是否属于同一个类。如果equals 的语义在每个子类中有所改变，就使用getClass 检测：
-`if (getClass() != otherObject.getCIassO) return false;`
+`if (getClass() != otherObject.getCIass()) return false;`
 如果所有的子类都拥有统一的语义，就使用instanceof 检测：
 `if (!(otherObject instanceof ClassName)) return false;`
 5 ) 将otherObject 转换为相应的类类型变量：
@@ -693,6 +675,7 @@ c:\classdir;.;c:\archives\ archive.jar
 **如果在子类中重新定义equals**,就要在其中包含调用super.equals(other)  
 
 29. 对于数组类型的域，可以使用静态的Arrays.equals方法检测相应的数组元素是否相等。
+
 30.hashcodeAPI
 `int type.hashcode(type instance);`
 `Objects.hash(name, salary, hireDay) ;`
@@ -737,15 +720,14 @@ public enum Size
 }
 ```
 
-`Size s = Enum.valueOf(Size,class, "SMALL");`
+`Size s = Enum.valueOf(Size.class, "SMALL");`
 `Size[] Size.values()`
 38. 反射
-> `Class cl = Cl ass.forName(dassName) ;`
+> `Class cl = Cl ass.forName(className) ;`
 鉴于历史原getName 方法在应用于数组类型的时候会返回一个很奇怪的名字：
-• Double[ ] class.getName( ) 返回“ [Ljava.lang.Double; ’’
-• int[ ].class.getName( ) 返回“ [I ” ，
-虚拟机为每个类型管理一个Class 对象。因此， 可以利用=运算符实现两个类对象比较
-的操作
+• Double[] class.getName() 返回“ [Ljava.lang.Double; ’’
+• int[].class.getName()返回“ [I ” ，
+虚拟机为每个类型管理一个Class对象。因此， 可以利用=运算符实现两个类对象比较的操作
 > Class 类的getDeclareFields、getDeclareMethods和getDeclaredConstructors方法将分别返回类中声明的全部域、方法和构造器， 其中包括私有和受保护成员，但不包括超类的成员。
 
 
@@ -761,7 +743,7 @@ public static Object badCopyOf(Object[] a, int newLength) // not useful
 }
 public static Object goodCopyOf(Object a, int newLength)
 {
-    Class cl = a.getClassO；
+    Class cl = a.getClass()；
     if (！cl.isArray()) return null ;
     Class componentType = cl.getComponentType()；//注意
     int length = Array.getLength(a);
@@ -772,38 +754,28 @@ public static Object goodCopyOf(Object a, int newLength)
 ```
 40. 调用任意方法
 `Object invoke(Object obj, Object... args)` 如果是静态方法obj填null
-41. 虽然在接口中不能包含实例域或静态方法，但却可以包含常量
+41. 虽然在接口中不能包含实例域或**静态方法(java8之前)**，但却可以包含常量.
 42. 目前为止， 通常的做法都是将静态方法放在伴随类中。在标准库中， 你会看到成对出现
-的接口和实用工具类， 如Collection/Collections 或Path/Paths。
-面来看Paths 类， 其中只包含两个工厂方法。可以由一个字符串序列构造一个文件或
-目录的路径， 如Paths.getfjdk1.8.0", "jre", "bin")。在Java SE 8 中， 可以为Path 接口增加以
-下方法：
+的接口和实用工具类， 如Collection/Collections 或Path/Paths。面来看Paths 类， 其中只包含两个工厂方法。可以由一个字符串序列构造一个文件或目录的路径， 如Paths.get("jdk1.8.0", "jre", "bin")。在Java SE 8中， 可以为Path 接口增加以下方法：
 ```java
 public interface Path{
     public static Path get(String first, String... more) {
-    return Fi1eSystems.getDefaul t() .getPath(first, more);
+    return Fi1eSystems.getDefault().getPath(first, more);
     }
 }
 ```
 这样一来， Paths 类就不再是必要的了。
 43. default关键字：用于接口中方法的声明，意为接口中的实现为默认实现，如果实现接口的类不覆盖则使用这个实现。
-44. 默认方法的一个重要用法是“ 接口演化” （interface evolution)。
-45. 我们只讨论了两个接口的命名冲突。现在来考虑另一种情况， 一个类扩展了一个超类，
-同时实现了一个接口，并从超类和接口继承了相同的方法。例如， 假设Person 是一个类，
-Student 定义为：
-class Student extends Person implements Named { . . . }
-在这种情况下， 只会考虑超类方法， 接口的所有默认方法都会被忽略。在我们的例子
-中， Student 从Person 继承了getName 方法， Named 接口是否为getName 提供了默认实现并
-不会带来什么区别。这正是“ 类优先” 规则。
-46. 尽管LengthComparator 对象没有状态， 不过还是需要建立这个对象的一个实例。
-我们需要这个实例来调用compare 方法它不是一个静态方法。
-47. ![image.png](https://i.loli.net/2019/01/21/5c453bea3e69d.png)
-通常子对象都是可变的，必须重新定义clone方法来建立一个深拷贝，同时克隆所有子对象。在这个例子中，hireDay域是一个Date,这是可变的，所以它也需要克隆。（出于这个原因，这个例子使用Date类型的域而不是LocalDate来展示克隆过程。如果hireDay是不可变的LocalDate类的一个实例，就无需我们做任何处理了。）
-48. Cloneable 接口是Java 提供的一组标记接口( tagging interface ) 之一
-标记接口不包含任何方法；它唯一的作用就是允许在类型查询中使用instanceof.即使clone 的默认（浅拷贝）实现能够满足要求，还是需要实现Cloneable接口，将clone重新定义为public， 再调用super.clone()。
+44. 默认方法的一个重要用法是“接口演化” （interface evolution)。
+45. 我们只讨论了两个接口的命名冲突。现在来考虑另一种情况，一个类扩展了一个超类，同时实现了一个接口，并从超类和接口继承了相同的方法。例如，假设Person 是一个类，Student 定义为：class Student extends Person implements Named { . . . }在这种情况下， 只会考虑超类方法， 接口的所有默认方法都会被忽略。在我们的例子中， Student从Person继承了getName方法，Named接口是否为getName提供了默认实现并不会带来什么区别。这正是“ 类优先” 规则。
+46. 尽管LengthComparator对象没有状态，不过还是需要建立这个对象的一个实例。我们需要这个实例来调用compare方法，它不是一个静态方法。
+47. 通常子对象都是可变的，必须重新定义clone方法来建立一个深拷贝，同时克隆所有子对象。在这个例子中，hireDay域是一个Date,这是可变的，所以它也需要克隆。（出于这个原因，这个例子使用Date类型的域而不是LocalDate来展示克隆过程。如果hireDay是不可变的LocalDate类的一个实例，就无需我们做任何处理了。）
+![image.png](https://i.loli.net/2019/01/21/5c453bea3e69d.png)
+48. Cloneable 接口是Java提供的一组标记接口(tagging interface) 之一
+标记接口不包含任何方法；它唯一的作用就是允许在类型查询中使用instanceof。即使clone的默认（浅拷贝）实现能够满足要求（实例域全部是不可变时），还是需要实现Cloneable接口，将clone重新定义为public， 再调用super.clone()。
 49. 如果在一个对象上调用clone,但这个对象的类并没有实现Cloneable接口，Object 类的clone方法就会拋出一个CloneNotSupportedException当然，Employee和Date类实现了Cloneable 接口，所以不会抛出这个异常。不过，编译器并不了解这一点，因此，我们声明了这个异常。
-50. 所有数组类型都有一个public 的clone 方法，而不是protected:可以用这个方法
-建立一个新数组， 包含原数组所有元素的副本。
+50. 所有数组类型都有一个public的clone 方法，而不是protected,可以用这个方法
+建立一个新数组，包含原数组所有元素的副本。
 51. 对于只有一个抽象方法的接口， 需要这种接口的对象时，就可以提供一个lambda 表达式。这种接口称为函数式接口（ functional interface )。
 52. 甚至不能把lambda表达式赋给类型为Object的变量，Object不是一个函数式接口。
 53. 
@@ -826,8 +798,7 @@ list.removelf(e -> e == null);
 在前2 种情况中， 方法引用等价于提供方法参数的lambda 表达式。前面已经提到，
 System.out::println 等价于x -> System.out.println(x)。 类似地，Math::pow 等价于（x，y) ->Math.pow(x, y)。
 对于第3 种情况， 第1个参数会成为方法的目标。例如，String::compareToIgnoreCase 等同于(x, y) -> x.compareToIgnoreCase(y);
-55. lambda 表达式中捕获的变量必须实际上是**最终变量( effectivelyfinal)**。
-实际上的最终变量是指， 这个变量初始化之后就不会再为它赋新值。在这里，text 总是指示同一个 String对象，所以捕获这个变量是合法的。不过，i的值会改变，因此不能捕获i。
+55. lambda 表达式中捕获的变量必须实际上是**最终变量( effectivelyfinal)**。实际上的最终变量是指， 这个变量初始化之后就不会再为它赋新值。在这里，text 总是指示同一个 String对象，所以捕获这个变量是合法的。不过，i的值会改变，因此不能捕获i。
 56. 内部类既可以访问自身的数据域，也可以访问创建它的外围类对象的数据域.为了能够运行这个程序，内部类的对象总有一个隐式引用，它指向了创建它的外部类对象。
 57. TimePrinter 类声明为私有的。这样一来，只有TalkingClock的方法才能够构造TimePrinter 对象。只有内部类可以是私有类，而常规类只可以具有包可见性，或公有可见性。
 58. 外围类，内部类。
@@ -837,7 +808,7 @@ System.out::println 等价于x -> System.out.println(x)。 类似地，Math::pow
 应该通过检测数组下标是否越界来避免ArraylndexOutOfBoundsException 异常；应该通过在使用变量之前检测是否为null来杜绝NullPointerException异常的发生：
 62. 前面曾经提到过：如果编写一个覆盖超类的方法，而这个方法又没有抛出异常（如JComponent中的paintComponent),那么这个方法就必须捕获方法代码中出现的每一个受查异常。不许在子类的throws 说明符中出现超过超类方法所列出的异常类范围。
 63. catch (FileNotFoundException | UnknownHostException e) { . . . }
-64. 同样，也不应该声明从RuntimeException 继承的那些非受查异常0
+64. 同样，也不应该声明从RuntimeException 继承的那些非受查异常.
 ```java 
 class MyAnimation
 {
@@ -846,8 +817,7 @@ class MyAnimation
     }
 }
 ```
-65. 未被任何变量引用的日志记录器可能会被垃圾回收。为了防止这种情况发生，要
-像上面的例子中一样， 用一个静态变量存储日志记录器的一个引用。
+65. 未被任何变量引用的日志记录器可能会被垃圾回收。为了防止这种情况发生，要像上面的例子中一样，用一个静态变量存储日志记录器的一个引用。
 
 ## JAVA和C++的区别
 
@@ -855,7 +825,7 @@ class MyAnimation
 | --- | --- | --- | --- |
 | 类中函数 | 方法 | 成员函数 | |
 | 字面数值表示 | 可以加下划线 | 不可以 | |
-| 进制表示 | 可表示二进制（0b\|0B） | 不可以 | |
+| 进制表示 | 可表示二进制（0b或0B） | 不可以 | |
 | 无符号数 | 没有 | 有 | |
 | 逗号运算符 | 没有 | 有 | |
 | 更改器方法与访问器方法 | 无明显区别 | const关键字 | |
