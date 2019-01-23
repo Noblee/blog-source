@@ -24,6 +24,7 @@ originContent: >-
 
   实用工具方法 
 
+  <!-- more -->
 
   ## 零碎知识
 
@@ -47,7 +48,6 @@ originContent: >-
 
   >* 如果将一个类标记为 strictfp, 这个类中的所有方法都要使用严格的浮点计算。实际的计算方式将取决于 Intel 处理器的行为。
 
-  >
 
   > 在默认情况下，中间结果允许使用扩展 的指数， 但不允许使用扩展的尾数(Intel 芯片在截断尾数时并不损失性能)。 因此，这两种
   方式的区别仅仅在于采用默认的方式不会产生溢出，而采用严格的计算有可能产生溢出。
@@ -112,6 +112,10 @@ originContent: >-
   15. java内存结构
 
   [![](https://i.loli.net/2019/01/02/5c2b9bf995574.png)](https://i.loli.net/2019/01/02/5c2b9bf995574.png)
+
+
+
+
 
   16. 对象初始化块（要在实例域后定义）和静态初始化块
 
@@ -193,8 +197,6 @@ originContent: >-
 
   * 对本包可见————默认（很遗憾)，不需要修饰符.
 
-
-  .
 
   27. 为了防备name或hireDay可能为null的情况，需要使用Objects.equals 方法。
 
@@ -561,7 +563,7 @@ date: 2019-01-21 11:30:03
 handler 处理器
 已检查异常，和未检查异常
 实用工具方法 
-
+<!-- more -->
 ## 零碎知识
 1. main 函数必须是public的
 2. final 定义变量 等于 const（C/C++）
@@ -581,7 +583,7 @@ handler 处理器
 > javac Employee*.java
 于是， 所有与通配符匹配的源文件都将被编译成类文件。 或者键人下列命令: 
 javac EmployeeTest.java
-读者可能会感到惊讶， 使用第二种方式， 并没有显式地编译 Employeejava 然而， 当 Java 编 译器发现 EmployeeTestjava 使用了Employee 类时会查找名为 Employee.class 的文件。 如果没有找 到这个文件， 就会自动地搜索 Employeejava, 然后， 对它进行编译。更重要的是: 如果 Employee, java 版本较已有的 Employee.dass 文件版本新， Java 编译器就会自动地重新编译这个文件。
+读者可能会感到惊讶， 使用第二种方式， 并没有显式地编译 Employeejava 然而， 当 Java 编 译器发现 EmployeeTestjava 使用了Employee 类时会查找名为 Employee.class 的文件。 如果没有找 到这个文件， 就会自动地搜索 Employeejava, 然后， 对它进行编译。更重要的是: 如果 Employee.java 版本较已有的 Employee.class 文件版本新， Java 编译器就会自动地重新编译这个文件。
 10. `janes.EmployeeCJames Bond", 250000, 1950, 1, 1) // ERROR`
 11. 所有的 Java 对象都是在堆中构造的。
  ```java
@@ -607,6 +609,10 @@ Employee number007("]anie5 Bond", 100000, 1950, 1, 1);//此种方式是在栈中
 
 15. java内存结构
 [![](https://i.loli.net/2019/01/02/5c2b9bf995574.png)](https://i.loli.net/2019/01/02/5c2b9bf995574.png)
+
+
+
+
 16. 对象初始化块（要在实例域后定义）和静态初始化块
 ```java
     (static) class Some{

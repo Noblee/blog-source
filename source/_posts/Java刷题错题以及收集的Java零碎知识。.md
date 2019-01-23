@@ -5,10 +5,11 @@ tags:
   - 基础
   - Java
   - 笔记
-originContent: >
+originContent: >-
   # 错题
 
   1. 关于以下application,说法正确是什么？
+
 
   ```java
 
@@ -23,6 +24,7 @@ originContent: >
   }//9
 
   ```
+
 
   > 答案：编译通过，执行结果是：x=5
 
@@ -61,6 +63,8 @@ originContent: >
   ```
 
   父类静态代码块-->子类静态代码块-->父类普通代码块-->父类构造方法-->子类代码块-->子类构造方法；
+
+  <!-- more -->
 
   2.下面代码的输出是什么？
 
@@ -105,10 +109,11 @@ originContent: >
 
   >new Sub();在创造派生类的过程中首先创建基类对象，然后才能创建派生类。
 
-  创建基类即默认调用Base()方法，在方法中调用callName()方法，由于派生类中存在此方法，则被调用的callName（）方法是派生类中的方法，此时派生类还未构造，所以变量baseName的值为null
+  创建基类即默认调用Base()方法，在方法中调用callName()方法，由于派生类中存在此方法，则被调用的callName（）方法是派生类中的方法，此时派生类还未构造，所以变量baseName的值为null.
 
 
   3. Java语言中，如果"xyz"没有被创建过，String s = new String(“xyz”);创建了几个string对象？
+
 
   > 答案：2个
 
@@ -318,6 +323,7 @@ date: 2019-01-22 21:49:57
 
 # 错题
 1. 关于以下application,说法正确是什么？
+
 ```java
 public class Test {
     static int x=10;
@@ -329,6 +335,7 @@ public class Test {
     static{x/=3;};
 }//9
 ```
+
 > 答案：编译通过，执行结果是：x=5
 
 解析：
@@ -360,6 +367,7 @@ public class B extends A{
 }
 ```
 父类静态代码块-->子类静态代码块-->父类普通代码块-->父类构造方法-->子类代码块-->子类构造方法；
+<!-- more -->
 2.下面代码的输出是什么？
 ```java
 public class Base
@@ -394,9 +402,10 @@ public class Base
 
 解析：
 >new Sub();在创造派生类的过程中首先创建基类对象，然后才能创建派生类。
-创建基类即默认调用Base()方法，在方法中调用callName()方法，由于派生类中存在此方法，则被调用的callName（）方法是派生类中的方法，此时派生类还未构造，所以变量baseName的值为null
+创建基类即默认调用Base()方法，在方法中调用callName()方法，由于派生类中存在此方法，则被调用的callName（）方法是派生类中的方法，此时派生类还未构造，所以变量baseName的值为null.
 
 3. Java语言中，如果"xyz"没有被创建过，String s = new String(“xyz”);创建了几个string对象？
+
 > 答案：2个
 
 > 解析:
@@ -476,10 +485,10 @@ Which four statements are true ?
 
 > 答案：
 
-The type List<A>is assignable to List.
-The type List<Object>is assignable to List\<?\>.
-The type List<D>is assignable to List<?extends B>.
-The type List<?extends B>is assignable to List<?extends A>.
+The type List<A> is assignable to List.
+The type List<Object> is assignable to List\<?\>.
+The type List<D> is assignable to List<?extends B>.
+The type List<?extends B> is assignable to List<?extends A>.
 
 > 解析
 ```
