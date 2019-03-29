@@ -1,10 +1,12 @@
 ---
 title: (转)make 2>&1 | tee log.txt命令解析
 tags:
-  - Linux
   - 基础
   - 笔记
-originContent: >+
+  - Linux
+originContent: >-
+  [原文](http://blog.sina.com.cn/s/blog_4b03202d0101e0xr.html)
+
   make 2>&1 | tee log.txt命令解析
 
 
@@ -57,7 +59,6 @@ originContent: >+
 
 
   所以这里tee命令的作用是将数据读入并写到标准输出以及log.txt中。
-
 categories:
   - Linux
 toc: false
@@ -82,7 +83,7 @@ make是linux下一个非常强大的命令，简单点就是你要编译你的�
 
 所以2>&1的意思就是说无论标准出错在哪里，都将标准出错重定向到标准输出中。
 
-
+<!-- more -->
 
 有时候希望将错误的信息重新定向到输出，就是将2的结果重定向至1中就有了”2>1”这样的思路，如果按照上面的写法，系统会默认将错误的信息（STDERR）2重定向到一个名字为1的文件中，而非所想的（STDOUT）中。因此需要加&进行区分。就有了 2>&1 这样的用法
 
@@ -101,4 +102,3 @@ make是linux下一个非常强大的命令，简单点就是你要编译你的�
 tee从标准输入中读取，并将读入的内容写到标准输出以及文件中。
 
 所以这里tee命令的作用是将数据读入并写到标准输出以及log.txt中。
-

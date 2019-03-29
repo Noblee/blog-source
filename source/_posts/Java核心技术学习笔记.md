@@ -74,7 +74,7 @@ originContent: >-
 
   读者可能会感到惊讶， 使用第二种方式， 并没有显式地编译 Employeejava 然而， 当 Java 编 译器发现 EmployeeTestjava
   使用了Employee 类时会查找名为 Employee.class 的文件。 如果没有找 到这个文件， 就会自动地搜索 Employeejava, 然后，
-  对它进行编译。更重要的是: 如果 Employee, java 版本较已有的 Employee.dass 文件版本新， Java
+  对它进行编译。更重要的是: 如果 Employee.java 版本较已有的 Employee.class 文件版本新， Java
   编译器就会自动地重新编译这个文件。
 
   10. `janes.EmployeeCJames Bond", 250000, 1950, 1, 1) // ERROR`
@@ -555,7 +555,7 @@ date: 2019-01-21 11:30:03
 ---
 
 # Java 语言学习笔记
-## 各种名词含义
+## 名词解释
 更改器方法与访问器方法 实例域 
 方法参数(基本&引用) 静态域
 不可变类，可变类
