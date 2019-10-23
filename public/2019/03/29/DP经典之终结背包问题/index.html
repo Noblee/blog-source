@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="笔记,算法,动态规划,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="DP经典之终结背包问题前两天刷题一道完全背包问题，无论如何都超时，百思不得其解。查了之后才知道有一维数组的解决方法。现来总结一下基本的背包问题。">
+<meta name="keywords" content="笔记,算法,动态规划">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DP经典之终结背包问题">
+<meta property="og:url" content="https://www.nobler.xyz/2019/03/29/DP经典之终结背包问题/index.html">
+<meta property="og:site_name" content="Noble&#39;s Blog">
+<meta property="og:description" content="DP经典之终结背包问题前两天刷题一道完全背包问题，无论如何都超时，百思不得其解。查了之后才知道有一维数组的解决方法。现来总结一下基本的背包问题。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-06T07:48:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DP经典之终结背包问题">
+<meta name="twitter:description" content="DP经典之终结背包问题前两天刷题一道完全背包问题，无论如何都超时，百思不得其解。查了之后才知道有一维数组的解决方法。现来总结一下基本的背包问题。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.nobler.xyz/2019/03/29/DP经典之终结背包问题/">
+
+
+
+
+
+  <title>DP经典之终结背包问题 | Noble's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Noble's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">给时光以生命，而不是给生命以时光。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.nobler.xyz/2019/03/29/DP经典之终结背包问题/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Noble">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Noble's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">DP经典之终结背包问题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-29T16:22:37+08:00">
+                2019-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="DP经典之终结背包问题"><a href="#DP经典之终结背包问题" class="headerlink" title="DP经典之终结背包问题"></a>DP经典之终结背包问题</h1><p>前两天刷题一道完全背包问题，无论如何都超时，百思不得其解。查了之后才知道有一维数组的解决方法。现来总结一下基本的背包问题。<br><a id="more"></a> </p>
+<h3 id="01背包"><a href="#01背包" class="headerlink" title="01背包"></a>01背包</h3><h4 id="状态转移方程："><a href="#状态转移方程：" class="headerlink" title="状态转移方程："></a>状态转移方程：</h4><p><code>f[i][j] = max(f[i - 1][j] , f[i - 1][j - weight[i]] + value[i])</code></p>
+<blockquote>
+<p>i为物品范围（列），j为背包重量（行）<br>n个物品，m空间</p>
+</blockquote>
+<h4 id="举例如何分析转移方程："><a href="#举例如何分析转移方程：" class="headerlink" title="举例如何分析转移方程："></a>举例如何分析转移方程：</h4><p>其一，我们发现列扫描（j固定，i变化）只能从小到大。原因是我们所求值（f（i,j））所在位置的列值(j)和需要用到的数据列值<strong>有相同</strong>且为前置数据（f(i-1,j)），故必然只能从小到大。</p>
+<p>其二，行扫描（i固定，j变化）则无所谓。原因是我们所求值（f（i,j））所在位置的行值(i)和需要用到的数据列值<strong>都不同</strong>，故当前行扫描无论以何种顺序都是正确的。</p>
+<p>其三，由于行扫描只需要扫描前一行的数据，最多只需要当前行和上一行，故实际上不需要简历f[n][m]数组，只需要f[2][m]即可，i-1之前的状态不需要要记忆。</p>
+<p>其四，进一步的来讲，不难想到，可以通过适当的扫描顺序来重复利用一行数据达到仅使用一位数组的目的。即将行扫描倒序进行。此时的倒序进行不是转移方程所要求的，而是优化技巧而已。</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = m; j &gt;= weight[i]; j--) &#123;</span><br><span class="line">         f[j] = f[j] &gt; f[j - weight[i]] + value[i] ? f[j] : f[j - weight[i]] + value[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="完全背包"><a href="#完全背包" class="headerlink" title="完全背包"></a>完全背包</h3><h4 id="复杂状态转移方程："><a href="#复杂状态转移方程：" class="headerlink" title="复杂状态转移方程："></a>复杂状态转移方程：</h4><p><code>f[i][v]=max{f[i-1][v-k*c[i]]+k*w[i]|0&lt;=k*c[i]&lt;=v}</code><br>时间复杂度：O(V*Σ(V/c[i]))</p>
+<h4 id="化简状态转移方程："><a href="#化简状态转移方程：" class="headerlink" title="化简状态转移方程："></a>化简状态转移方程：</h4><p><code>f[i][v]=max{f[i-1][v],f[i][v-c[i]]+w[i]}</code><br>时间复杂度：O(VN)</p>
+<blockquote>
+<p>i为物品范围（列），v为背包重量（行）</p>
+</blockquote>
+<h4 id="为何可以这样化简？"><a href="#为何可以这样化简？" class="headerlink" title="为何可以这样化简？"></a>为何可以这样化简？</h4><p>简要说明：</p>
+<blockquote>
+<p>完全背包的特点恰是每种物品可选无限件，所以在考虑“加选一件第i种物品”这种策略时，却正需要一个可能已选入第i种物品的子结果f[i][v-c[i]]，所以就可以并且必须采用v=0..V的顺序循环。这就是这个简单的程序为何成立的道理。<br>——背包九讲</p>
+</blockquote>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = weight[i]; j &lt;= m; j++) &#123;</span><br><span class="line">        f[j] = max(f[j], f[j - weight[i]] + value[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="多重背包"><a href="#多重背包" class="headerlink" title="多重背包"></a>多重背包</h3><h4 id="题目："><a href="#题目：" class="headerlink" title="题目："></a>题目：</h4><p>有N种物品和一个容量为V的背包。第i种物品最多有n[i]件可用，每件费用是c[i]，价值是w[i]。求解将哪些物品装入背包可使这些物品的费用总和不超过背包容量，且价值总和最·大。</p>
+<h4 id="状态转移方程"><a href="#状态转移方程" class="headerlink" title="状态转移方程"></a>状态转移方程</h4><p><code>f[i][v]=max{f[i-1][v-k*c[i]]+k*w[i]|0&lt;=k&lt;=n[i]}</code><br>时间复杂度：O(V*Σn[i])</p>
+<h4 id="转化为01背包问题"><a href="#转化为01背包问题" class="headerlink" title="转化为01背包问题"></a>转化为01背包问题</h4><p>将多个物品相同物品转化为单个不同物品，通过二进制的思想进项转化。</p>
+<blockquote>
+<p>考虑二进制的思想，我们考虑把第i种物品换成若干件物品，使得原问题中第i种物品可取的每种策略——取0..n[i]件——均能等价于取若干件代换以后的物品。另外，取超过n[i]件的策略必不能出现。</p>
+</blockquote>
+<blockquote>
+<p>方法是：将第i种物品分成若干件物品，其中每件物品有一个系数，这件物品的费用和价值均是原来的费用和价值乘以这个系数。使这些系数分别为1,2,4,…,2^(k-1),n[i]-2^k+1，且k是满足n[i]-2^k+1&gt;0的最大整数。例如，如果n[i]为13，就将这种物品分成系数分别为1,2,4,6的四件物品。</p>
+</blockquote>
+<h4 id="伪代码（二进制分解法）"><a href="#伪代码（二进制分解法）" class="headerlink" title="伪代码（二进制分解法）"></a>伪代码（二进制分解法）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">procedure MultiplePack(cost,weight,amount)</span><br><span class="line">    <span class="keyword">if</span> cost*amount&gt;=V</span><br><span class="line">        CompletePack(cost,weight)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    integer k=<span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> k&lt;amount</span><br><span class="line">        ZeroOnePack(k*cost,k*weight)</span><br><span class="line">        amount=amount-k</span><br><span class="line">        k=k*<span class="number">2</span></span><br><span class="line">    ZeroOnePack(amount*cost,amount*weight)</span><br></pre></td></tr></table></figure>
+<h4 id="代码（非二进制分解法实现）"><a href="#代码（非二进制分解法实现）" class="headerlink" title="代码（非二进制分解法实现）"></a>代码（非二进制分解法实现）</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> V 1000</span></span><br><span class="line"><span class="keyword">int</span> weight[<span class="number">50</span> + <span class="number">1</span>];</span><br><span class="line"><span class="keyword">int</span> value[<span class="number">50</span> + <span class="number">1</span>];</span><br><span class="line"><span class="keyword">int</span> num[<span class="number">20</span> + <span class="number">1</span>];</span><br><span class="line"><span class="keyword">int</span> f[V + <span class="number">1</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">max</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a &gt; b ? a : b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, m;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"请输入物品个数:"</span>;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"请分别输入"</span> &lt;&lt; n &lt;&lt; <span class="string">"个物品的重量、价值和数量:"</span> &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; weight[i] &gt;&gt; value[i] &gt;&gt; num[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> k = n + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">while</span> (num[i] != <span class="number">1</span>) &#123;</span><br><span class="line">            weight[k] = weight[i];</span><br><span class="line">            value[k] = value[i];</span><br><span class="line">            k++;</span><br><span class="line">            num[i]--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"请输入背包容量:"</span>;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= k; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = m; j &gt;= <span class="number">1</span>; j--) &#123;</span><br><span class="line">            <span class="keyword">if</span> (weight[i] &lt;= j) f[j] = max(f[j], f[j - weight[i]] + value[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"背包能放的最大价值为:"</span> &lt;&lt; f[m] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="代码（二进制分解法实现）"><a href="#代码（二进制分解法实现）" class="headerlink" title="代码（二进制分解法实现）"></a>代码（二进制分解法实现）</h4><p>//todo</p>
+<h4 id="O-VN-算法的存在"><a href="#O-VN-算法的存在" class="headerlink" title="O(VN)算法的存在"></a>O(VN)算法的存在</h4><blockquote>
+<p>多重背包问题同样有O(VN)的算法。这个算法基于基本算法的状态转移方程，但应用单调队列的方法使每个状态的值可以以均摊O(1)的时间求解。由于用单调队列优化的DP已超出了NOIP的范围，故本文不再展开讲解。我最初了解到这个方法是在楼天成的“男人八题”幻灯片上。</p>
+</blockquote>
+<h3 id="混合三种背包问题"><a href="#混合三种背包问题" class="headerlink" title="混合三种背包问题"></a>混合三种背包问题</h3><h4 id="01背包与完全背包的混合"><a href="#01背包与完全背包的混合" class="headerlink" title="01背包与完全背包的混合"></a>01背包与完全背包的混合</h4><h5 id="伪代码"><a href="#伪代码" class="headerlink" title="伪代码"></a>伪代码</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i=<span class="number">1.</span>.N</span><br><span class="line">    <span class="keyword">if</span> 第i件物品属于<span class="number">01</span>背包</span><br><span class="line">        <span class="keyword">for</span> v=V.<span class="number">.0</span></span><br><span class="line">            f[v]=max&#123;f[v],f[v-c[i]]+w[i]&#125;;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> 第i件物品属于完全背包</span><br><span class="line">        <span class="keyword">for</span> v=<span class="number">0.</span>.V</span><br><span class="line">            f[v]=max&#123;f[v],f[v-c[i]]+w[i]&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="再加上多重背包"><a href="#再加上多重背包" class="headerlink" title="再加上多重背包"></a>再加上多重背包</h4><h5 id="伪代码-1"><a href="#伪代码-1" class="headerlink" title="伪代码"></a>伪代码</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i=<span class="number">1.</span>.N</span><br><span class="line">    <span class="keyword">if</span> 第i件物品属于<span class="number">01</span>背包</span><br><span class="line">        ZeroOnePack(c[i],w[i])</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> 第i件物品属于完全背包</span><br><span class="line">        CompletePack(c[i],w[i])</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> 第i件物品属于多重背包</span><br><span class="line">        MultiplePack(c[i],w[i],n[i])</span><br></pre></td></tr></table></figure>
+<p>参考资料<br><a href="https://www.kancloud.cn/kancloud/pack/70129" target="_blank" rel="noopener">背包问题九讲</a><br><a href="https://www.cnblogs.com/fengziwei/p/7750849.html" target="_blank" rel="noopener">背包问题：0-1背包、完全背包和多重背包</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/笔记/" rel="tag"># 笔记</a>
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/动态规划/" rel="tag"># 动态规划</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/27/MySql两阶段加锁（2PL）协议剖析/" rel="next" title="MySql两阶段加锁（2PL）协议剖析">
+                <i class="fa fa-chevron-left"></i> MySql两阶段加锁（2PL）协议剖析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/02/siddhi源码/" rel="prev" title="siddhi源码">
+                siddhi源码 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="Noble">
+            
+              <p class="site-author-name" itemprop="name">Noble</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/noblee" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:AaronWang1129@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://telegram.me/AaronWang1129" target="_blank" title="Telegram">
+                      
+                        <i class="fa fa-fw fa-telegram"></i>Telegram</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://message/?uin=1055806142" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DP经典之终结背包问题"><span class="nav-number">1.</span> <span class="nav-text">DP经典之终结背包问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01背包"><span class="nav-number">1.0.1.</span> <span class="nav-text">01背包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#状态转移方程："><span class="nav-number">1.0.1.1.</span> <span class="nav-text">状态转移方程：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#举例如何分析转移方程："><span class="nav-number">1.0.1.2.</span> <span class="nav-text">举例如何分析转移方程：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码"><span class="nav-number">1.0.1.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完全背包"><span class="nav-number">1.0.2.</span> <span class="nav-text">完全背包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#复杂状态转移方程："><span class="nav-number">1.0.2.1.</span> <span class="nav-text">复杂状态转移方程：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#化简状态转移方程："><span class="nav-number">1.0.2.2.</span> <span class="nav-text">化简状态转移方程：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为何可以这样化简？"><span class="nav-number">1.0.2.3.</span> <span class="nav-text">为何可以这样化简？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-1"><span class="nav-number">1.0.2.4.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多重背包"><span class="nav-number">1.0.3.</span> <span class="nav-text">多重背包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目："><span class="nav-number">1.0.3.1.</span> <span class="nav-text">题目：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#状态转移方程"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">状态转移方程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#转化为01背包问题"><span class="nav-number">1.0.3.3.</span> <span class="nav-text">转化为01背包问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#伪代码（二进制分解法）"><span class="nav-number">1.0.3.4.</span> <span class="nav-text">伪代码（二进制分解法）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码（非二进制分解法实现）"><span class="nav-number">1.0.3.5.</span> <span class="nav-text">代码（非二进制分解法实现）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码（二进制分解法实现）"><span class="nav-number">1.0.3.6.</span> <span class="nav-text">代码（二进制分解法实现）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#O-VN-算法的存在"><span class="nav-number">1.0.3.7.</span> <span class="nav-text">O(VN)算法的存在</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#混合三种背包问题"><span class="nav-number">1.0.4.</span> <span class="nav-text">混合三种背包问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#01背包与完全背包的混合"><span class="nav-number">1.0.4.1.</span> <span class="nav-text">01背包与完全背包的混合</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#伪代码"><span class="nav-number">1.0.4.1.1.</span> <span class="nav-text">伪代码</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#再加上多重背包"><span class="nav-number">1.0.4.2.</span> <span class="nav-text">再加上多重背包</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#伪代码-1"><span class="nav-number">1.0.4.2.1.</span> <span class="nav-text">伪代码</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Noble</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>
